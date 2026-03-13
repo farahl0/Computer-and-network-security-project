@@ -99,6 +99,44 @@ public class MonoalphabeticCipher {
         /// Z	0.09
     public String analyseUsingCharFrequency(String cipher) {
         // Students should complete this part
-        return null;
+        int[] freqsInCipher = new int[26];
+        cipher = cipher.toLowerCase();
+        int cipherLen = cipher.length();
+
+        double[] lettersFreqs = {
+                8.04, 1.54, 3.06, 3.99, 12.51, 2.30, 1.96, 5.49, 7.26,
+                0.16, 0.67, 4.14, 2.53, 7.09,  7.60, 2.00, 0.11, 6.12,
+                6.54, 9.25, 2.71, 0.99, 1.92,  0.19, 1.73, 0.09
+        };
+
+        Integer[] cipherIndx = new Integer[26];
+        Integer[] engIndx = new Integer[26];
+
+        for(int i = 0; i < 26; i++){
+            cipherIndx[i] = i;
+            engIndx[i] = i;
+        }
+
+        for(int i = 0; i < cipherLen; i++){
+            char c = cipher.charAt(i);
+            if(c >= 'a' && c <= 'z') freqsInCipher[c - 'a']++;
+        }
+
+        Arrays.sort(cipherIndx, (a, b) -> freqsInCipher[b] - freqsInCipher[a]);
+        Arrays.sort(engIndx, (a, b) -> Double.compare(lettersFreqs[b], lettersFreqs[a]));
+
+        char[] mapping = new char[26];
+        for(int i = 0; i < 26; i++){
+            mapping[cipherIndx[i]] = (char)(engIndx[i] + 'a');
+        }
+
+        StringBuilder result = new StringBuilder();
+        for(int i = 0; i < cipherLen; i++){
+            char c = cipher.charAt(i);
+            if(c >= 'a' && c <= 'z') result.append(mapping[c - 'a']);
+            else result.append(c);
+        }
+
+        return result.toString();
     }
 }
