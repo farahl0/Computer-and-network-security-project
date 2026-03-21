@@ -142,7 +142,6 @@ public class HillCipher {
     public List<Integer> decrypt(List<Integer> cipherText, List<Integer> key) {
         // Students should complete this part
         int n = findMatrixSize(key.size());
-        if (n == -1) throw new InvalidAnalysisException();
         List<Integer> plainText = new ArrayList<>();
         List<Integer> inverseKey = invertMatrix(key, n);
         for (int i = 0; i < cipherText.size(); i += n) {
